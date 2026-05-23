@@ -2,24 +2,15 @@
   "name": "Pomodoro 🍅",
   "short_name": "Pomodoro",
   "description": "A cute minimal Pomodoro timer",
-  "start_url": "/pomodoro-pwa/",
+  "start_url": "/pomodoro-pwa/index.html",
   "scope": "/pomodoro-pwa/",
   "display": "standalone",
-  "background_color": "#fff8f0",
+  "background_color": "#fff5f0",
   "theme_color": "#ff6b6b",
   "orientation": "portrait",
   "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "icon-192.png",         "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png",         "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }
