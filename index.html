@@ -223,16 +223,171 @@
       transition: stroke-dashoffset 0.65s linear, stroke 0.4s ease;
       filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent) 50%, transparent));
     }
+
+    /* ── TABS ROW ── */
+    .tabs-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 580px;
+    }
+
+    /* ── GEAR BUTTON ── */
+    .btn-gear {
+      width:  clamp(44px, 7vw, 60px);
+      height: clamp(44px, 7vw, 60px);
+      border-radius: 50%;
+      border: 3px solid rgba(0,0,0,0.08);
+      background: white;
+      color: var(--muted);
+      font-size: clamp(18px, 3vw, 26px);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-gear:hover  { color: var(--text); transform: rotate(30deg); }
+    .btn-gear:active { transform: scale(0.9) rotate(30deg); }
+
+    /* ── SETTINGS MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 100;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: white;
+      border-radius: 28px;
+      padding: clamp(24px, 4vw, 40px);
+      width: min(420px, 90vw);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+      transform: translateY(24px) scale(0.97);
+      transition: transform 0.28s cubic-bezier(.34,1.56,.64,1);
+    }
+    .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+
+    .modal h2 {
+      font-size: clamp(18px, 3vw, 24px);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: clamp(20px, 3vw, 32px);
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .setting-row {
+      margin-bottom: clamp(16px, 2.5vw, 24px);
+    }
+    .setting-label {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: clamp(14px, 2.2vw, 18px);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .setting-label span {
+      font-size: clamp(18px, 2.8vw, 22px);
+      font-weight: 900;
+      color: var(--accent);
+      min-width: 52px;
+      text-align: right;
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.08);
+      outline: none;
+      cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: clamp(30px, 5vw, 40px);
+      height: clamp(30px, 5vw, 40px);
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 3px 10px color-mix(in srgb, var(--accent) 45%, transparent);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
+
+    .modal-actions {
+      display: flex; gap: 12px; margin-top: clamp(20px, 3vw, 32px);
+    }
+    .btn-save {
+      flex: 1;
+      height: clamp(52px, 7vw, 64px);
+      border: none; border-radius: 999px;
+      background: var(--accent); color: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(15px, 2.2vw, 20px);
+      font-weight: 900; letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 40%, transparent);
+      transition: all 0.18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-save:active { transform: scale(0.95); }
+    .btn-cancel {
+      height: clamp(52px, 7vw, 64px);
+      padding: 0 clamp(20px, 3vw, 32px);
+      border: 3px solid rgba(0,0,0,0.08); border-radius: 999px;
+      background: white; color: var(--muted);
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(15px, 2.2vw, 20px);
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-cancel:active { transform: scale(0.95); }
   </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab active" data-mode="work">🍅 Munka</button>
-    <button class="tab" data-mode="short">☕ Kis szünet</button>
-    <button class="tab" data-mode="long">🌙 Nagy szünet</button>
+  <!-- Tabs + Gear -->
+  <div class="tabs-row">
+    <div class="tabs" style="flex:1">
+      <button class="tab active" data-mode="work">🍅 Munka</button>
+      <button class="tab" data-mode="short">☕ Kis szünet</button>
+      <button class="tab" data-mode="long">🌙 Nagy szünet</button>
+    </div>
+    <button class="btn-gear" id="btn-gear" title="Beállítások">⚙️</button>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <h2>⚙️ Beállítások</h2>
+      <div class="setting-row">
+        <div class="setting-label">🍅 Fókusz ideje <span id="lbl-work">25 perc</span></div>
+        <input type="range" id="sl-work" min="5" max="60" step="5" value="25" />
+      </div>
+      <div class="setting-row">
+        <div class="setting-label">☕ Kis szünet <span id="lbl-short">5 perc</span></div>
+        <input type="range" id="sl-short" min="1" max="15" step="1" value="5" />
+      </div>
+      <div class="setting-row">
+        <div class="setting-label">🌙 Nagy szünet <span id="lbl-long">15 perc</span></div>
+        <input type="range" id="sl-long" min="5" max="30" step="5" value="15" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="btn-cancel">Mégse</button>
+        <button class="btn-save" id="btn-save">Mentés ✓</button>
+      </div>
+    </div>
   </div>
 
   <!-- Ring -->
@@ -288,15 +443,25 @@
 
   <!-- Stats -->
   <div class="stats">Ma: <b id="count">0</b> pomodoro 🎉</div>
-  <div style="font-size:11px;color:#ddd;margin-top:4px;font-family:monospace;">v1.0.3</div>
+  <div style="font-size:11px;color:#ddd;margin-top:4px;font-family:monospace;">v1.0.4</div>
 
 </div>
 
 <script>
+// ── SETTINGS ──────────────────────────────────────────
+const DEFAULTS = { work: 25, short: 5, long: 15 };
+function loadSettings() {
+  try { return JSON.parse(localStorage.getItem("pomo-settings")) || DEFAULTS; }
+  catch { return DEFAULTS; }
+}
+function saveSettings(s) { localStorage.setItem("pomo-settings", JSON.stringify(s)); }
+
+let settings = loadSettings();
+
 const MODES = {
-  work:  { label:"FÓKUSZ",      emoji:"🍅", duration:25*60, color:"#ff6b6b", bg:"#fff5f0", bodyColor:"#ff6b6b" },
-  short: { label:"KIS SZÜNET",  emoji:"☕", duration: 5*60, color:"#26c485", bg:"#f0fdf7", bodyColor:"#26c485" },
-  long:  { label:"NAGY SZÜNET", emoji:"🌙", duration:15*60, color:"#7b8cde", bg:"#f4f3ff", bodyColor:"#7b8cde" },
+  work:  { label:"FÓKUSZ",      emoji:"🍅", get duration(){ return settings.work  * 60; }, color:"#ff6b6b", bg:"#fff5f0" },
+  short: { label:"KIS SZÜNET",  emoji:"☕", get duration(){ return settings.short * 60; }, color:"#26c485", bg:"#f0fdf7" },
+  long:  { label:"NAGY SZÜNET", emoji:"🌙", get duration(){ return settings.long  * 60; }, color:"#7b8cde", bg:"#f4f3ff" },
 };
 const CIRC = 2 * Math.PI * 185;
 
@@ -476,6 +641,43 @@ function tick() {
 }
 
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(console.error);
+
+// ── SETTINGS MODAL ────────────────────────────────────
+const overlay  = document.getElementById("modal-overlay");
+const slWork   = document.getElementById("sl-work");
+const slShort  = document.getElementById("sl-short");
+const slLong   = document.getElementById("sl-long");
+const lblWork  = document.getElementById("lbl-work");
+const lblShort = document.getElementById("lbl-short");
+const lblLong  = document.getElementById("lbl-long");
+
+function openSettings() {
+  slWork.value  = settings.work;
+  slShort.value = settings.short;
+  slLong.value  = settings.long;
+  lblWork.textContent  = settings.work  + " perc";
+  lblShort.textContent = settings.short + " perc";
+  lblLong.textContent  = settings.long  + " perc";
+  overlay.classList.add("open");
+}
+function closeSettings() { overlay.classList.remove("open"); }
+
+slWork.addEventListener("input",  () => lblWork.textContent  = slWork.value  + " perc");
+slShort.addEventListener("input", () => lblShort.textContent = slShort.value + " perc");
+slLong.addEventListener("input",  () => lblLong.textContent  = slLong.value  + " perc");
+
+document.getElementById("btn-gear").addEventListener("click", openSettings);
+document.getElementById("btn-cancel").addEventListener("click", closeSettings);
+overlay.addEventListener("click", e => { if (e.target === overlay) closeSettings(); });
+
+document.getElementById("btn-save").addEventListener("click", () => {
+  settings = { work: +slWork.value, short: +slShort.value, long: +slLong.value };
+  saveSettings(settings);
+  running = false; clearInterval(interval);
+  timeLeft = MODES[mode].duration;
+  closeSettings();
+  render();
+});
 
 applyTheme("work");
 render();
