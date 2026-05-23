@@ -1,4 +1,4 @@
-const CACHE = "pomodoro-v3";
+const CACHE = "pomodoro-v5";
 const BASE = "/pomodoro-pwa/";
 const ASSETS = [BASE, BASE + "index.html", BASE + "manifest.json", BASE + "icon-192.png", BASE + "icon-512.png"];
 
